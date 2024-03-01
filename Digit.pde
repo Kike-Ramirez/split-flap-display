@@ -28,12 +28,15 @@ class Digit1 extends Digit {
     strokeWeight(1);
     stroke(0);
     pushMatrix();
-    translate(x, y);
+    translate(x, y, 0);
     rotateX(angle);
     fill(0);
     rect(0, 0, 200, 60);
     fill(255);
-    text(message, 0, 0); 
+    println(angle % PI > PI/2);
+    if (angle % PI > PI/2) {
+      text(message, 0, 0); 
+    }
     popMatrix();
   }
 }
