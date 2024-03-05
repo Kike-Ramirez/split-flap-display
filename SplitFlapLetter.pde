@@ -6,19 +6,52 @@ class SplitFlapLetter {
   PFont font = createFont("Helvetica.ttf", fontSize);
   int heightCard = 350;
   int widthCard = 250;
-  float flapTime = 0.2;
   color bgColor = color(0);
   color fontColor = color(255);
   color strokeColor = color(0);
   int strokeWeight = 0;
   color dividerColor = color(255, 0, 0);
   int dividerWeight = 2;
-  int positionNow = 0;
-  int positionTarget = 0;
 
+  int positionNow = 32;
+  int positionTarget = 32;
+  int flapFrameCount = 6;
+  int flapCount = 0;
 
   SplitFlapLetter() {
     createList();
+  }
+
+  void update() {
+    if (positionNow != positionTarget) {
+      flapCount++;
+      if (flapCount >= flapFrameCount) {
+        flapCount = 0;
+        positionNow++;
+        if (positionNow > 127) {
+          positionNow = 32;
+        }
+      }
+    }
+  }
+
+  void setFlapFrameCount(int i) {
+    flapFrameCount = i;
+  }
+  void setPositionTargetInt(int i) {
+    positionTarget = (i - 32) % (127-32);
+  }
+
+  void setPositionTargetChar(char c) {
+    positionTarget = int(c);
+  }
+
+  void increasePositionTarget() {
+    positionTarget++;
+
+    if (positionTarget > 127) {
+      positionTarget = 0;
+    }
   }
 
   void setSize(int w, int h, boolean recreate) {
@@ -172,5 +205,9 @@ class SplitFlapLetter {
     translate(x, y + digit[1].height);
     image(digit[0], 0, 0);
     popMatrix();
+  }
+  
+  void displayDigit(int x, int y) {
+    printDigitInt(positionNow, x, y);
   }
 }
